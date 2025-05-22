@@ -1,5 +1,6 @@
 // EDIT THIS FILE TO COMPLETE ASSIGNMENT QUESTION 1
-const { chromium } = require("playwright");
+// const { chromium } = require("playwright");
+import { chromium, Browser, BrowserContext, Page } from "playwright";
 
 async function sortHackerNewsArticles() {
   // launch browser
