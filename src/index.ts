@@ -14,9 +14,24 @@ async function sortHackerNewsArticles(): Promise<void> {
 
   console.log("Went to link: %s", link);
 
+  // for exactly the first 100, we'll need to check the first few pages
+  const agesLocators: Locator[] = [];
+
   // create locator for submission times. submission date/time has class 'age'
-  const ageLocator: Locator = page.locator("span.age");
-  console.log("Got %d ages", await ageLocator.count());
+  while (agesLocators.length < 100) {
+    const ageLocator: Locator = page.locator(".age"); // prefer locator to something like waitForSelector
+    agesLocators.push(...await ageLocator.all()); 
+
+    console.log(agesLocators.length)
+
+    // navigate to next page
+    await page.locator(".morelink").click();
+    // console.log("Navigated to next page")
+  }
+
+  // keep the first 100 results
+  const firstHundredAgeLocators: Locator[] = agesLocators.slice(0,100);
+  console.log(firstHundredAgeLocators);
 
   await page.close(); // close browser once we've collected the submission ages
 }
