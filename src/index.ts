@@ -17,6 +17,8 @@ async function sortHackerNewsArticles(): Promise<void> {
   // create locator for submission times. submission date/time has class 'age'
   const ageLocator: Locator = page.locator("span.age");
   console.log("Got %d ages", await ageLocator.count());
+
+  await page.close(); // close browser once we've collected the submission ages
 }
 
 (async () => {
