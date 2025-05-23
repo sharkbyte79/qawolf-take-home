@@ -1,7 +1,6 @@
 // EDIT THIS FILE TO COMPLETE ASSIGNMENT QUESTION 1
 // const { chromium } = require("playwright");
 import { chromium, Browser, BrowserContext, Page, Locator } from 'playwright';
-import pino from 'pino';
 
 // Descriptive wrapper for the info we'll scrape from each article listing
 // This only requires getting the ages/submission times for comparison, but we'll include
@@ -53,21 +52,12 @@ export default async function sortHackerNewsArticles(
         }
 
         // navigate to next page
-        await page.getByRole('link', { name: 'More' }).click();
+        await page.getByRole('link', { name: 'More', exact: true }).click();
         console.log('Navigated to next page');
-
     }
-
-    // keep the first 100 results
-    // const firstHundredAgeLocators: Locator[] = agesLocators.slice(0,100);
-    // console.log(firstHundredAgeLocators);
 
     await page.close(); // close browser once we've collected the submission dates
 
-    console.log(articles)
-    // console.log(articles);
-
-    return true;
 }
 
 // (async () => {
