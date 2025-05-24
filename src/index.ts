@@ -13,11 +13,10 @@ interface ArticleData {
 export default async function sortHackerNewsArticles(
     page: Page,
     numSubmissions: number
-): Promise<boolean> {
-    // Returning a boolean to make this testable
-    // launch browser
+): Promise<boolean> { // Returning a boolean to make this testable
 
     // NOTE: We can let the tester handle launching browsers instead of doing it manually
+    // launch browser
     // const browser: Browser = await chromium.launch({ headless: false }); // headless=true to spawn browser in the background
     // const context: BrowserContext = await browser.newContext();
     // const page: Page = await context.newPage();
@@ -34,21 +33,25 @@ export default async function sortHackerNewsArticles(
     // create locator for submission times. submission date/time has class 'age'
     while (articles.length < numSubmissions) {
         const articlesLoc: Locator = await page.locator('.athing'); // prefer locator to something like waitForSelector
-        const articlesCount: number = await articlesLoc.count();
+        for (const article of await articlesLoc.all()) {
+            const title: string = await article
+                .locator('.titleline a')
+                .first()
+                .innerText();
 
-        for (let i = 0; i < articlesCount; i+=1) {
-            const article: Locator = articlesLoc.nth(i);
+            const subDate: string =
+                (await article
+                    .locator('+ tr')
+                    .locator('.age')
+                    .getAttribute('title')) ?? '';
 
-            const title: string = (await article.locator('.titleline a').first().innerText());
-            const subDate: string = await article.locator('+ tr').locator('.age').getAttribute('title') ?? '';
-            const timestamp: number = parseInt(subDate.split(" ")[1]); // the submission age contains a UNIX timestamp, more useful for direct comparison
+            const timestamp: number = parseInt(subDate.split(' ')[1]); // the submission age contains a UNIX timestamp, more useful for direct comparison
 
-            articles.push({title, timestamp});
+            articles.push({ title, timestamp });
 
             if (articles.length >= 100) {
                 break;
             }
-
         }
 
         // navigate to next page
@@ -58,6 +61,11 @@ export default async function sortHackerNewsArticles(
 
     await page.close(); // close browser once we've collected the submission dates
 
+    // Check that the timestamps are arranged all in descending order
+    return articles.slice(1).every((article, idx) => {
+        // each article[idx] is compared to the article "behind" it
+        return article.timestamp <= articles[idx].timestamp;
+    });
 }
 
 // (async () => {
