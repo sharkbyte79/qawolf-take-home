@@ -13,7 +13,8 @@ interface ArticleData {
 export default async function sortHackerNewsArticles(
     page: Page,
     numSubmissions: number
-): Promise<boolean> { // Returning a boolean to make this testable
+): Promise<boolean> {
+    // Returning a boolean to make this testable
 
     // NOTE: We can let the tester handle launching browsers instead of doing it manually
     // launch browser
@@ -35,7 +36,7 @@ export default async function sortHackerNewsArticles(
         const articlesLoc: Locator = await page.locator('.athing'); // prefer locator to something like waitForSelector
         for (const article of await articlesLoc.all()) {
             const title: string = await article
-                .locator('.titleline a') 
+                .locator('.titleline a')
                 .first()
                 .innerText();
 
@@ -50,9 +51,7 @@ export default async function sortHackerNewsArticles(
             const data: ArticleData = { title, timestamp };
             articles.push(data); // add record for this article to the list
 
-            if (articles.length >= 100) {
-                break;
-            }
+            if (articles.length >= 100) { break; }
         }
 
         // navigate to next page
