@@ -1,4 +1,5 @@
-FROM node:20-bookworm
+# 'slim' version lacks some libs for webkit
+FROM node:20-bookworm 
 
 WORKDIR /app
 COPY . /app
