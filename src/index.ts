@@ -35,7 +35,7 @@ export default async function sortHackerNewsArticles(
         const articlesLoc: Locator = await page.locator('.athing'); // prefer locator to something like waitForSelector
         for (const article of await articlesLoc.all()) {
             const title: string = await article
-                .locator('.titleline a')
+                .locator('.titleline a') 
                 .first()
                 .innerText();
 
@@ -47,7 +47,7 @@ export default async function sortHackerNewsArticles(
 
             const timestamp: number = parseInt(subDate.split(' ')[1]); // the submission age contains a UNIX timestamp, more useful for direct comparison
 
-            articles.push({ title, timestamp });
+            articles.push({ title, timestamp } as ArticleData); // add record for this article to the list
 
             if (articles.length >= 100) {
                 break;
