@@ -33,7 +33,7 @@ export default async function sortHackerNewsArticles(
 
     // we should create a locator for each page (until we reach collect enough articles)
     while (articles.length < numSubmissions) {
-        const articlesLoc: Locator = await page.locator('.athing'); // prefer locator to something like waitForSelector
+        const articlesLoc: Locator = page.locator('.athing'); // prefer locator to something like waitForSelector
         for (const article of await articlesLoc.all()) {
             const title: string = await article
                 .locator('.titleline a')
@@ -51,7 +51,9 @@ export default async function sortHackerNewsArticles(
             const data: ArticleData = { title, timestamp };
             articles.push(data); // add record for this article to the list
 
-            if (articles.length >= 100) { break; }
+            if (articles.length >= 100) {
+                break;
+            }
         }
 
         // navigate to next page
