@@ -1,6 +1,6 @@
 // EDIT THIS FILE TO COMPLETE ASSIGNMENT QUESTION 1
 // const { chromium } = require("playwright");
-import { chromium, Browser, BrowserContext, Page, Locator } from 'playwright';
+import { Page, Locator } from 'playwright';
 
 // Descriptive wrapper for the info we'll scrape from each article listing
 // This only requires getting the ages/submission times for comparison, but we'll include
@@ -30,7 +30,7 @@ export default async function sortHackerNewsArticles(
     // for exactly the first 100, we'll need to check the first few pages
     let articles: ArticleData[] = [];
 
-    // create locator for submission times. submission date/time has class 'age'
+    // we should create a locator for each page (until we reach collect enough articles)
     while (articles.length < numSubmissions) {
         const articlesLoc: Locator = await page.locator('.athing'); // prefer locator to something like waitForSelector
         for (const article of await articlesLoc.all()) {
