@@ -47,7 +47,8 @@ export default async function sortHackerNewsArticles(
 
             const timestamp: number = parseInt(subDate.split(' ')[1]); // the submission age contains a UNIX timestamp, more useful for direct comparison
 
-            articles.push({ title, timestamp } as ArticleData); // add record for this article to the list
+            const data: ArticleData = { title, timestamp };
+            articles.push(data); // add record for this article to the list
 
             if (articles.length >= 100) {
                 break;
