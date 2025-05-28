@@ -24,7 +24,8 @@ module.exports = defineConfig({
   // reporter: 'html',
   reporter: [
     ['html', { outputFolder: './playwright-report', open: 'never' }],
-    ['json', { outputFile: './test-results/out.json' }]
+    ['playwright-ctrf-json-reporter', {}],
+    // ['json', { outputFile: './test-results/out.json' }]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

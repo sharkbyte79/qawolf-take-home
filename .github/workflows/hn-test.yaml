@@ -9,6 +9,8 @@ jobs:
         container:
             image: mcr.microsoft.com/playwright:v1.52.0-noble
             options: --user 1001
+            volumes: 
+             - ./ctrf:/app/ctrf
         steps:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
@@ -17,12 +19,13 @@ jobs:
 
             - name: Install deps
               run: npm ci
-
+            
             - name: Run test
               run: npx playwright test
 
             - name: Publish Test Report
               uses: ctrf-io/github-test-reporter@v1
               with:
-                  report-path: './ctrf/*.json'
+                report-path: './ctrf/*.json'
               if: always()
+              
