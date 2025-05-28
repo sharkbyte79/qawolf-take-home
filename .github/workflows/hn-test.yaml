@@ -1,0 +1,21 @@
+name: Run playwright tests
+
+on: push
+
+jobs:
+    run-tests:
+        name: Run Playwright tests
+        runs-on: ubuntu-latest
+        container:
+            image: node-20:bookworm
+            volumes:
+                - ${{ github.workspace }}:/app
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v2
+            - name: Installing Playwright
+              run: npx -y playwright@1.39.0 install --with-deps
+            - name: Installing deps
+              run: npm i
+            - name: Running test
+              run: npx playwright test
