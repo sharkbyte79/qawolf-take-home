@@ -8,6 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: node:20-bookworm
+            options: --user root
             volumes:
                 - ${{ github.workspace }}:/app
         steps:
@@ -17,7 +18,7 @@ jobs:
             - name: Installing deps
               run: npm ci
 
-            - name: Installing Playwright
+            - name: Installing Playwright browsers
               run: npx playwright install --with-deps
 
             - name: Test e2e
