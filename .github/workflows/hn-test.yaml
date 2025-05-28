@@ -20,3 +20,9 @@ jobs:
 
             - name: Run test
               run: npx playwright test
+
+            - name: Publish Test Report
+              uses: ctrf-io/github-test-reporter@v1
+              with:
+                  report-path: './ctrf/*.json'
+              if: always()
