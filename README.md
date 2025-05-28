@@ -1,6 +1,28 @@
 # 🐺 QA Wolf Take Home Assignment
-
 Welcome to the QA Wolf take home assignment for our [QA Engineer](https://www.task-wolf.com/apply-qae) role! We appreciate your interest and look forward to seeing what you come up with.
+
+## 💡 Run Instructions
+Hello! I've included three ways to run the tests for my implementation of the finished script:
+
+### 🖥️ Locally
+Copy and run the following command in your terminal:
+
+`npm i && npx -y 2.52.0 install --with-deps && npx playwright test`
+
+### 🐋 Docker (Recommended)
+The included Dockerfile can be used to build a Debian container that runs the tests in headless mode. 
+
+```console
+$ docker build -t qa .
+
+$ docker run -v ./playwright-report:/app/playwright-report qa
+```
+
+After the container has been built and the tests run successfully, the command `npx playwright report` will serve an HTML report of the tests, viewable in your browser.
+
+### ⚙️  GitHub Actions 
+A workflow file is included (`./github/workflows/hn-test.yaml`) that can be used to run the script via **GitHub Actions**.
+
 
 ## Instructions
 
