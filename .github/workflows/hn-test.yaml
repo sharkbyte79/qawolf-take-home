@@ -13,13 +13,16 @@ jobs:
         steps:
             - name: Checkout repo
               uses: actions/checkout@v2
-            - name: Installing Playwright
-              run: npx -y playwright@1.39.0 install --with-deps
+
             - name: Installing deps
-              run: npm i
+              run: npm ci
+
+            - name: Installing Playwright
+              run: npx playwright install --with-deps
+
             - name: Test e2e
-              env: 
-                # Fix firefox crash when run with Github actions
-                # Details: https://github.com/microsoft/playwright/issues/6500#issuecomment-838515115`
-                HOME: /root
+              env:
+                  # Fix firefox crash when run with Github actions
+                  # Details: https://github.com/microsoft/playwright/issues/6500#issuecomment-838515115`
+                  HOME: /root
               run: npx playwright test
